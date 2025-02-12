@@ -1,0 +1,60 @@
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exit Poll Simulation</title>
+<style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    .party-btn { margin: 5px; padding: 10px 20px; cursor: pointer; }
+    #results { display: flex; justify-content: center; align-items: flex-end; height: 300px; border-left: 2px solid black; margin-top: 20px; }
+    .bar-container { width: 50px; margin: 0 10px; text-align: center; position: relative; }
+    .bar { width: 100%; background-color: steelblue; transition: height 0.5s; position: relative; }
+    .percentage-label { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Exit Poll Simulation</h1>
+<p>Vote for your preferred party:</p>
+<button class="party-btn" onclick="vote('Party A')">Party A</button>
+<button class="party-btn" onclick="vote('Party B')">Party B</button>
+<button class="party-btn" onclick="vote('Party C')">Party C</button>
+
+<h2>Results:</h2>
+<div id="results">
+    <div class="bar-container">
+        <div class="percentage-label" id="labelA">0%</div>
+        <div id="barA" class="bar" style="height: 0;"></div>
+        <div>Party A</div>
+    </div>
+    <div class="bar-container">
+        <div class="percentage-label" id="labelB">0%</div>
+        <div id="barB" class="bar" style="height: 0;"></div>
+        <div>Party B</div>
+    </div>
+    <div class="bar-container">
+        <div class="percentage-label" id="labelC">0%</div>
+        <div id="barC" class="bar" style="height: 0;"></div>
+        <div>Party C</div>
+    </div>
+</div>
+
+<script>
+    let votes = { 'Party A': 0, 'Party B': 0, 'Party C': 0 };
+    
+    function vote(party) {
+        votes[party]++;
+        updateResults();
+    }
+    
+    function updateResults() {
+        let totalVotes = votes['Party A'] + votes['Party B'] + votes['Party C'];
+        
+        for (let party in votes) {
+            let percentage = totalVotes > 0 ? (votes[party] / totalVotes * 100).toFixed(2) : 0;
+            document.getElementById(`bar${party.split(' ')[1]}`).style.height = `${percentage * 2}px`;
+            document.getElementById(`label${party.split(' ')[1]}`).innerText = `${percentage}%`;
+        }
+    }
+</script>
+</body>
+</html>
+
